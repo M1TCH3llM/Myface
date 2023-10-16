@@ -6,20 +6,18 @@ const assignmentSchema = require('./Thought');
 // Schema to create Student model
 const userSchema = new Schema(
   {
-    userId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
     userName: {
       type: String,
       unique: true, 
       required: true,
-      trimmed: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
+      unique: true,
       max_length: 50,
+      // match: [/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/, "Not Valid!"],
       validate: {
         validator: function(v) {
           return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/.test(v);
@@ -28,11 +26,14 @@ const userSchema = new Schema(
     },
     // grab user thoughts by id??
     friends: [{
-      type: Schema.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User'
     }],
     // self refrance user ids??
-    friends: [thoughtsSchema],
+    thoughts: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Thought',
+    }],
   },
   {
     toJSON: {
@@ -41,6 +42,6 @@ const userSchema = new Schema(
   }
 );
 
-const Student = model('student', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;
