@@ -1,14 +1,14 @@
 // probably finished?
 
-const { Schema, model } = require('mongoose');
-const assignmentSchema = require('./Thought');
+const { Schema, model } = require("mongoose");
+const thoughtSchema = require("./Thought");
 
 // Schema to create Student model
 const userSchema = new Schema(
   {
     userName: {
       type: String,
-      unique: true, 
+      unique: true,
       required: true,
       trim: true,
     },
@@ -16,8 +16,8 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      max_length: 50,
-      // match: [/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/, "Not Valid!"],
+      maxlength: 50,
+      // match: [/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Not Valid!"],
       validate: {
         validator: function(v) {
           return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/.test(v);
@@ -25,15 +25,19 @@ const userSchema = new Schema(
       }
     },
     // grab user thoughts by id??
-    friends: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     // self refrance user ids??
-    thoughts: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Thought',
-    }],
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Thought",
+      },
+    ],
   },
   {
     toJSON: {
@@ -42,6 +46,6 @@ const userSchema = new Schema(
   }
 );
 
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;

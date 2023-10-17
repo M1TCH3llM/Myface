@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-const reactionSchema = require('./Reaction');
+const { Schema, model } = require("mongoose");
+const reactionSchema = require("./Reaction");
 
 const thoughtSchema = new Schema(
   {
@@ -12,7 +12,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get:date => new Date(date).toLocalString()
+      get: (date) => new Date(date).toLocaleString(),
     },
     userName: {
       type: String,
@@ -28,6 +28,6 @@ const thoughtSchema = new Schema(
   }
 );
 
-const Thought = model('Thought', thoughtSchema)
+const Thought = model("Thought", thoughtSchema);
 
 module.exports = Thought;
