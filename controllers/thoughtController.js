@@ -25,21 +25,6 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // Create a thought
-  // async createThought(req, res) {
-  //   try {
-  //     const thought = await Thought.create(
-  //       { _id: req.params.userId },
-  //       { $addToSet: { thoughts: req.body } },
-  //       console.log(req.body)
-  //       // { runValidators: true, new: true }
-  //     );
-  //     res.json(thought);
-  //   } catch (err) {
-  //     console.log(err);
-  //     return res.status(500).json(err);
-  //   }
-  // },
 
   async createThought(req, res) {
     try {
@@ -49,10 +34,15 @@ module.exports = {
       });
 
       const user = await User.findOneAndUpdate(
-        { _id: req.params.userId },
+        { userName: req.body.userName },
         { $push: { thoughts: thought } },
         { new: true }
       );
+      if (!user) {
+        return res.status(404).send("User Not Found");
+      }
+
+      console.log(user);
 
       res.json(thought);
     } catch (err) {

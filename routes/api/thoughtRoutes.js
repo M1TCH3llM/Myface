@@ -8,9 +8,7 @@ const {
 } = require("../../controllers/ThoughtController.js");
 
 // /api/Thoughts
-router.route("/").get(getThoughts);
-
-router.route("/:userId").post(createThought);
+router.route("/").get(getThoughts).post(createThought);
 
 // /api/Thoughts/:ThoughtId
 router
