@@ -92,39 +92,39 @@ module.exports = {
   },
   async createReaction(req, res) {
     try {
-      const user = await Thought.findOneAndUpdate(
-        { _id: req.params.userId },
-        { $addToSet: { friends: req.params.friendId } },
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId},
+        { $addToSet: { friends: req.params.body } },
         { runValidators: true, new: true }
       );
 
-      if (!user) {
+      if (!thought) {
         return res
           .status(404)
-          .json({ message: "No user found with that ID :(" });
+          .json({ message: "Reaction Not Created" });
       }
 
-      res.json(user);
+      res.json(thought);
     } catch (err) {
       res.status(500).json(err);
     }
   },
   // Remove assignment from a student
-  async removeFriends(req, res) {
+  async deleteReaction(req, res) {
     try {
-      const user = await User.findOneAndUpdate(
-        { _id: req.params.userId },
-        { $pull: { friends: req.params.friendId } },
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $pull: { reactions: req.params.reactionId } },
         { runValidators: true, new: true }
       );
 
-      if (!user) {
+      if (!thought) {
         return res
           .status(404)
-          .json({ message: "No student found with that ID :(" });
+          .json({ message: "No Reaction found with that ID" });
       }
 
-      res.json(student);
+      res.json(thought);
     } catch (err) {
       res.status(500).json(err);
     }

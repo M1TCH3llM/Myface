@@ -93,7 +93,7 @@ module.exports = {
           .json({ message: "No student found with that ID :(" });
       }
 
-      res.json(student);
+      res.json(user);
     } catch (err) {
       res.status(500).json(err);
     }
