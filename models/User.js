@@ -24,7 +24,7 @@ const userSchema = new Schema(
         }, message: props => `${props.value } is not valid`
       }
     },
-    // grab user thoughts by id??
+    
     friends: [
       {
         type: Schema.Types.ObjectId,

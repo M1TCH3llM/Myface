@@ -1,4 +1,4 @@
-const { Thought, User, Reaction } = require("../models");
+const { Thought, User, } = require("../models");
 
 module.exports = {
   async getThoughts(req, res) {
@@ -13,11 +13,11 @@ module.exports = {
   async getSingleThought(req, res) {
     try {
       const thought = await Thought.findOne({
-        _id: req.params.courseId,
-      }).select("-__v");
+        _id: req.params.thoughtId,
+      }).select("-__v").lean();
 
       if (!thought) {
-        return res.status(404).json({ message: "No course with that ID" });
+        return res.status(404).json({ message: "No thought with that ID" });
       }
 
       res.json(thought);
@@ -93,15 +93,13 @@ module.exports = {
   async createReaction(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
-        { _id: req.params.thoughtId},
-        { $addToSet: { friends: req.params.body } },
+        { _id: req.params.thoughtId },
+        { $addToSet: { reactions: req.body } },
         { runValidators: true, new: true }
       );
 
       if (!thought) {
-        return res
-          .status(404)
-          .json({ message: "Reaction Not Created" });
+        return res.status(404).json({ message: "Reaction Not Created" });
       }
 
       res.json(thought);
@@ -114,7 +112,7 @@ module.exports = {
     try {
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $pull: { reactions: req.params.reactionId } },
+        { $pull: { reactions:{ reactionId: req.params.reactionId } }},
         { runValidators: true, new: true }
       );
 
@@ -130,5 +128,3 @@ module.exports = {
     }
   },
 };
-
-
