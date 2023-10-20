@@ -47,7 +47,7 @@ DELETE /api/users/:userId/friends/:friendId: Remove a friend from a user's frien
 
 ## Links
 
-[Video]()
+[Video](https://drive.google.com/file/d/1Ix7l_bgvB6HJIiHJwn2CGuKe0llLWJOc/view)
 
 [GitHub](https://github.com/M1TCH3llM/Myface);
 
